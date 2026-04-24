@@ -14,15 +14,34 @@ player_inventory = {
 }
 
 
-def show_inventory(player_inventory):
-    for item, specs in player_inv.items():
-        print(f"Item: {item}\nSpecs:")
-        for spec, value in specs.items():
-            print(f"   {spec}: {value}")
-        print()
-
-
-def add_item(player_inv):
+def show_inventory(inventory):
+    result = []
     
+    for item, specs in inventory.items():
+        result.append(f"Item: {item}")
+        result.append("Specs:")
+        
+        for spec, value in specs.items():
+            result.append(f"   {spec}: {value}")
+    
+        result.append("")
+    
+    return "\n".join(result)
 
-show_inventory(player_inventory)
+
+def add_item(inventory, name, category, value, quantity, rarity):
+    if name not in inventory:
+        inventory.update({
+            name: {
+                "category": category,
+                "value": value,
+                "quantity": quantity,
+                "rarity": rarity}
+        })
+        return "Item added successfully"
+    else:
+        return "Error this item already exists try again"
+
+
+print(add_item(player_inventory, "Legendary Bow", "weapon", 450, 1, "Legendary⭐"))
+print(show_inventory(player_inventory))
