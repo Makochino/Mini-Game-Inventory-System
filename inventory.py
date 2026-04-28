@@ -51,21 +51,41 @@ def add_item(inventory, item, category, value, quantity, rarity):
 def remove_item(inventory, item):
     if item in inventory:
         inventory.pop(item)
-        return f"Item {item} was removed successfully from your inventory"
+        return f"Item {item} was removed successfully from your inventory\n"
     else:
-        return f"Item {item} is not in your inventory!!!"
+        return f"Item {item} is not in your inventory!!!\n"
 
 def update_quantity(inventory, item, quantity):
     if item in inventory:
         if isinstance(quantity, int) and quantity >= 0:
             inventory[item]["quantity"] = quantity
-            return f"{item} quantity was changed successfully)"
+            return f"{item} quantity was changed successfully)\n"
         else:
-            return f"{item} quantity should be 'int' and non-negative value"
+            return f"{item} quantity should be 'int' and non-negative value\n"
     else:
-        return f"{item} is not in your inventory!!!"
+        return f"{item} is not in your inventory!!\n!"
 
+
+def find_item(inventory, item):
+    result = []
+    
+    if item in inventory:
+        specs = inventory[item]
+        result.append(f"Item: {item}")
+        result.append("Specs:")
+
+
+        for spec, value in specs.items():
+            result.append(f"   {spec}: {value}")
+        
+        result.append("")
+        
+        return "\n".join(result)
+
+    else:
+        return f"Item {item} is not in your inventory"
+    
 print(add_item(player_inventory, "Legendary Bow", "weapon", 450, 1, "⭐ Legendary ⭐"))
 print(remove_item(player_inventory, "Iron Sword"))
 print(update_quantity(player_inventory, "Legendary Bow", 2))
-print(show_inventory(player_inventory))
+print(find_item(player_inventory, "Legendary Bow"))
