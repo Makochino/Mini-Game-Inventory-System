@@ -84,8 +84,31 @@ def find_item(inventory, item):
 
     else:
         return f"Item {item} is not in your inventory"
+
+
+def filter_by_category(inventory, category):
+    result = []
     
+    for item, specs in inventory.items():
+        
+        if specs["category"] == category:
+            specs = inventory[item]
+            result.append(f"Item: {item}")
+            result.append("Specs:")
+
+            for spec, value in specs.items():
+                result.append(f"   {spec}: {value}")
+                    
+            result.append("")
+   
+    
+    if result: # or len(result) >= 1, we could write both ways, but first option more pythonic, because empty list == False
+        return "\n".join(result) 
+    else: 
+        return f"Item of such category({category}) is not in your inventory"
+
+
 print(add_item(player_inventory, "Legendary Bow", "weapon", 450, 1, "⭐ Legendary ⭐"))
 print(remove_item(player_inventory, "Iron Sword"))
 print(update_quantity(player_inventory, "Legendary Bow", 2))
-print(find_item(player_inventory, "Legendary Bow"))
+print(filter_by_category(player_inventory, "weapon"))
