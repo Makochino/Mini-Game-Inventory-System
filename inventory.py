@@ -32,14 +32,20 @@ def show_inventory(inventory):
 def add_item(inventory, item, category, value, quantity, rarity):
     if item in inventory:
         return f"{item} is already in your inventory"        
+    
+    if not isinstance(value, int) or value < 0:
+        return "Value should be int and non-negative"
+
+    if not isinstance(quantity, int) or quantity < 0:
+        return "Quantity should be int and non-negative"
+
     else:
-        inventory.update({
-            item: {
-                "category": category,
-                "value": value,
-                "quantity": quantity,
-                "rarity": rarity}
-        })
+        inventory[item] = {
+            "category": category,
+            "value": value,
+            "quantity": quantity,
+            "rarity": rarity
+        }
         return f"Item {item} was added successfully to your inventory"
 
 def remove_item(inventory, item):
