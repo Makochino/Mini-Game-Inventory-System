@@ -1,18 +1,4 @@
-player_inventory = {
-    "Iron Sword": {
-        "category": "weapon",
-        "value": 120,
-        "quantity": 1,
-        "rarity": "common",
-    },
-    "Health Potion": {
-        "category": "potion",
-        "value": 30,
-        "quantity": 5,
-        "rarity": "uncommon",
-    },
-}
-
+from data import player_inventory
 
 def show_inventory(inventory):
     result = []
@@ -31,13 +17,13 @@ def show_inventory(inventory):
 
 def add_item(inventory, item, category, value, quantity, rarity):
     if item in inventory:
-        return f"{item} is already in your inventory"        
+        return f"{item} is already in your inventory\n"        
     
     if not isinstance(value, int) or value < 0:
-        return "Value should be int and non-negative"
+        return "Value should be int and non-negative\n"
 
     if not isinstance(quantity, int) or quantity < 0:
-        return "Quantity should be int and non-negative"
+        return "Quantity should be int and non-negative\n"
 
     else:
         inventory[item] = {
@@ -46,7 +32,7 @@ def add_item(inventory, item, category, value, quantity, rarity):
             "quantity": quantity,
             "rarity": rarity
         }
-        return f"Item {item} was added successfully to your inventory"
+        return f"Item {item} was added successfully to your inventory\n"
 
 def remove_item(inventory, item):
     if item in inventory:
@@ -56,14 +42,15 @@ def remove_item(inventory, item):
         return f"Item {item} is not in your inventory!!!\n"
 
 def update_quantity(inventory, item, quantity):
+    before_change_quantity = inventory[item]["quantity"]
     if item in inventory:
         if isinstance(quantity, int) and quantity >= 0:
             inventory[item]["quantity"] = quantity
-            return f"{item} quantity was changed successfully)\n"
+            return f"{item} quantity was changed successfully from {before_change_quantity} to {quantity}\n"
         else:
             return f"{item} quantity should be 'int' and non-negative value\n"
     else:
-        return f"{item} is not in your inventory!!\n!"
+        return f"{item} is not in your inventory!!!\n"
 
 
 def find_item(inventory, item):
@@ -107,8 +94,29 @@ def filter_by_category(inventory, category):
     else: 
         return f"Item of such category({category}) is not in your inventory"
 
+def filter_by_rarity(inventory, rarity):
+    result = []
+    
+    for item, specs in inventory.items():
+        
+        if specs["rarity"] == rarity:
+            specs = inventory[item]
+            result.append(f"Item: {item}")
+            result.append("Specs:")
+
+            for spec, value in specs.items():
+                result.append(f"   {spec}: {value}")
+                    
+            result.append("")
+
+
+    if result: 
+        return "\n".join(result) 
+    else: 
+        return f"Item of such category [{rarity}] is not in your inventory"
+
 
 print(add_item(player_inventory, "Legendary Bow", "weapon", 450, 1, "⭐ Legendary ⭐"))
 print(remove_item(player_inventory, "Iron Sword"))
 print(update_quantity(player_inventory, "Legendary Bow", 2))
-print(filter_by_category(player_inventory, "weapon"))
+print(filter_by_rarity(player_inventory, "⭐ Legendary ⭐"))
