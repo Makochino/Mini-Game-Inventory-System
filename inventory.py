@@ -99,10 +99,16 @@ def filter_by_spec_value(inventory, spec_name, target_value):
     else: 
         return f"No item found with {spec_name} = {target_value}" # переделать по гпт 
 
+def get_all_categories(inventory):
+    categories = []
+
+    for item, specs in inventory.items():
+        if "category" in specs:
+            categories.append(specs["category"])
+    
+    return (set(categories))
 
 print(add_item(player_inventory, "Legendary Bow", "weapon", 450, 1, "⭐ Legendary ⭐"))
-print(remove_item(player_inventory, "Iron Sword"))
 print(update_quantity(player_inventory, "Legendary Bow", 2))
-print(find_item(player_inventory, "Health Potion"))
-
-# print(filter_by_spec_value(player_inventory, "rarity", "⭐ Legendary ⭐"))
+print(show_inventory(player_inventory))
+print("Categories:", ", ".join(get_all_categories(player_inventory)))
