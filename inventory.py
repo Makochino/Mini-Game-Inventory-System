@@ -15,12 +15,12 @@ def show_inventory(inventory):
     return "\n".join(result)
 
 
-def add_item(inventory, item, category, value, quantity, rarity):
+def add_item(inventory, item, category, price, quantity, rarity):
     if item in inventory:
         return f"{item} is already in your inventory"        
     
-    if not isinstance(value, int) or value < 0:
-        return "Value should be int and non-negative"
+    if not isinstance(price, int) or price < 0:
+        return "price should be int and non-negative"
 
     if not isinstance(quantity, int) or quantity < 0:
         return "Quantity should be int and non-negative"
@@ -28,7 +28,7 @@ def add_item(inventory, item, category, value, quantity, rarity):
     else:
         inventory[item] = {
             "category": category,
-            "value": value,
+            "price": price,
             "quantity": quantity,
             "rarity": rarity
         }
@@ -51,7 +51,7 @@ def update_quantity(inventory, item, quantity):
             return f"{item} quantity was changed successfully from {before_change_quantity} to {quantity}"
         
         else:
-            return f"{item} quantity should be 'int' and non-negative value"
+            return f"{item} quantity should be 'int' and non-negative price"
     
     else:
         return f"{item} is not in your inventory!!!"
@@ -108,7 +108,16 @@ def get_all_categories(inventory):
     
     return (set(categories))
 
+def total_inventory_price(inventory):
+    total = 0
+
+    for item, specs in inventory.items():
+        total += specs["price"] * specs["quantity"]
+
+    return total
+
 print(add_item(player_inventory, "Legendary Bow", "weapon", 450, 1, "⭐ Legendary ⭐"))
 print(update_quantity(player_inventory, "Legendary Bow", 2))
 print(show_inventory(player_inventory))
 print("Categories:", ", ".join(get_all_categories(player_inventory)))
+print(f"Total price of the invenotory = {total_inventory_price(player_inventory)}")
