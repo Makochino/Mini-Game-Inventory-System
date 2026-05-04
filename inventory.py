@@ -39,7 +39,7 @@ def remove_item(inventory, item):
         inventory.pop(item)
         return f"Item {item} was removed successfully from your inventory"
     else:
-        return f"Item {item} is not in your inventory!!!"
+        return f"Item {item} is not in your inventory"
 
 def update_quantity(inventory, item, quantity):
     if item in inventory:
@@ -54,7 +54,7 @@ def update_quantity(inventory, item, quantity):
             return f"{item} quantity should be 'int' and non-negative price"
     
     else:
-        return f"{item} is not in your inventory!!!"
+        return f"{item} is not in your inventory"
 
 
 def find_item(inventory, item):
@@ -79,7 +79,7 @@ def find_item(inventory, item):
         return f"Item {item} is not in your inventory"
 
 
-def filter_by_spec_value(inventory, spec_name, target_value):
+def filter_by_spec(inventory, spec_name, target_value):
     result = []
     
     for item, specs in inventory.items():
@@ -106,7 +106,7 @@ def get_all_categories(inventory):
         if "category" in specs:
             categories.append(specs["category"])
     
-    return (set(categories))
+    return f"Categories: " + ", ".join(set(categories))
 
 def total_inventory_price(inventory):
     total = 0
@@ -114,10 +114,5 @@ def total_inventory_price(inventory):
     for item, specs in inventory.items():
         total += specs["price"] * specs["quantity"]
 
-    return total
+    return f"Total price of the invenotory = {total}"
 
-print(add_item(player_inventory, "Legendary Bow", "weapon", 450, 1, "⭐ Legendary ⭐"))
-print(update_quantity(player_inventory, "Legendary Bow", 2))
-print(show_inventory(player_inventory))
-print("Categories:", ", ".join(get_all_categories(player_inventory)))
-print(f"Total price of the invenotory = {total_inventory_price(player_inventory)}")
