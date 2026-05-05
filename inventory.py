@@ -63,7 +63,6 @@ def find_item(inventory, item):
     if item in inventory:
         specs = inventory[item]
         
-        result.append(f"Output of the search:")
         result.append(f"Item: {item}")
         result.append("Specs:")
 
@@ -95,9 +94,19 @@ def filter_by_spec(inventory, spec_name, target_value):
             result.append("\n")
     
     if result: # or len(result) >= 1, we could write both ways, but first option more pythonic, because empty list == False
-        return "".join(result) 
+        return "\n".join(result) 
     else: 
         return f"No item found with {spec_name} = {target_value}" # переделать по гпт 
+
+
+def total_inventory_price(inventory):
+    total = 0
+
+    for item, specs in inventory.items():
+        total += specs["price"] * specs["quantity"]
+
+    return total
+
 
 def get_all_categories(inventory):
     categories = []
@@ -106,13 +115,6 @@ def get_all_categories(inventory):
         if "category" in specs:
             categories.append(specs["category"])
     
-    return f"Categories: " + ", ".join(set(categories))
+    return set(categories)
 
-def total_inventory_price(inventory):
-    total = 0
-
-    for item, specs in inventory.items():
-        total += specs["price"] * specs["quantity"]
-
-    return f"Total price of the invenotory = {total}"
-
+print(filter_by_spec(player_inventory, "category", "weapon"))
