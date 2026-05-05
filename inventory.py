@@ -115,6 +115,4 @@ def get_all_categories(inventory):
         if "category" in specs:
             categories.append(specs["category"])
     
-    return set(categories)
-
-print(filter_by_spec(player_inventory, "category", "weapon"))
+    return sorted(set(categories))
